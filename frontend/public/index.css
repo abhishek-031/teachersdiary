@@ -1,0 +1,482 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+body{
+  margin:0;
+  background: #88BDBC;
+}
+
+a{
+  text-decoration: none;
+}
+
+Link{
+  text-decoration: none;
+}
+
+
+/*- --- header  -- - --*/
+
+header{
+  height:80px;
+  background: #112D32;
+}
+
+nav{
+  display: flex;
+  justify-content: space-between;
+}
+
+nav button{
+  color: #FBFFFF;
+  padding-bottom: 0;
+  font-size: 28px;
+  line-height: 80px;
+  border:none;
+  background: #112D32;
+  padding-top: 0;
+  box-sizing: border-box;
+  padding:0 2vw;
+}
+
+nav button:focus{
+  outline:none;
+}
+
+nav button:hover{
+  cursor: pointer;
+  background: #88BDBC;
+}
+
+.title{
+  font-family: 'Times New Roman', Times, serif;
+  color: #FBFFFF;
+  font-size: 36px;
+  line-height: 80px; 
+  padding-left: 4vw;
+}
+
+
+/*  --- -login and register -----  */
+*{
+  font-family: 'Poppins', sans-serif;
+  font-weight: 100;
+}
+
+.loginform {
+  margin:auto;
+  text-align: center;
+  margin-top:80px;
+  width:70vw;
+  background: #B4CFCF;
+  border-radius: 20px;
+  margin-bottom:80px;
+}
+
+.loginform h3{
+  margin:0;
+  padding-top:40px;
+  color:#112D32;
+  font-size:36px;
+}
+
+.loginform input{
+  margin-top:40px;
+  width:60%;
+  padding:14px;
+  border-radius: 8px;
+  color:#828282;
+  font-size: 18px;
+  border:none;
+}
+
+.loginform input:focus{
+  outline: 1px solid #88BDBC;
+}
+
+.loginform button{
+  margin: 40px 0;
+  padding:14px;
+  font-size: 18px;
+  background:#112D32;
+  color:#FBFFFF;
+  border:none;
+  width:60%;
+  border-radius: 8px;
+}
+
+.loginform button:hover{
+  background:#254e58;
+  cursor: pointer;
+}
+
+.loginform button:focus{
+  outline:none;
+}
+
+.loginform button:active{
+  background:#112D32;
+}
+
+
+
+
+/* -- - -- welcome page -- - - - */
+
+
+.welcomeText{
+  margin:0;
+  padding:50px 0 0 10vw;
+  color:#112D32;
+  font-size: 32px;
+}
+
+#classes{
+  padding-left:0;
+}
+
+.container{
+  text-align: center;
+}
+
+.linkContainer{
+  margin-top:50px;
+  text-align: center;
+}
+
+.linkBox{
+  display: inline-block;
+  text-align:center;
+  padding:40px;
+  border-radius: 10px;
+  font-size: 28px;
+  width:40%;
+  background: #254e58;
+  color:#FBFFFF;
+}
+
+.btn{
+  margin:auto;
+  margin-top:50px;
+  margin-bottom:50px;
+  background: #112D32;
+  color:#FBFFFF;
+  font-size: 28px;
+  border:none;
+  border-radius: 10px;
+  padding:20px;
+  width: 40%;
+}
+
+.btn:hover{
+  background: #254e58;
+  cursor: pointer;
+}
+
+.btn:focus{
+  outline:none;
+  background: #112D32;
+}
+
+/* - -- - -table - - -----  */
+
+.addeddiv{
+  background: #B4CFCF;
+  margin-top:30px;
+  margin-left:20px;
+  margin-right:20px;
+  border-radius: 20px;
+}
+
+.addeddiv h3{
+  margin:0;
+  padding:20px;
+  color:#FBFFFF;
+  font-size: 22px;
+}
+
+table{
+  margin-left:4vw;
+  color:#FBFFFF;
+  display: inline-block;
+  margin-bottom:20px;
+  padding-bottom: 20px;
+  background: #B4CFCF;
+  margin-right:4vw;
+}
+
+th{
+  font-size: 24px;
+  color:#FBFFFF;
+  background: #254e58;
+  padding:6px 10px;
+}
+
+td{
+  font-size:22px;
+  color:#254e58;
+  padding:6px 10px;
+  text-align: center;
+}
+
+
+/* -- - --- student form --- ---  */
+
+.studentform{
+  background: #B4CFCF;
+  margin:auto;
+  margin-top:30px;
+  margin-left:20px;
+  margin-right:20px;
+  border-radius: 20px;
+}
+
+.studentform h3{
+  color:#FBFFFF;
+  font-size: 28px;
+  margin:0;
+  padding-top:20px;
+  padding-left:20px;
+  padding-right: 20px;
+  border-radius: 20px;
+}
+
+.studentform input{
+  margin-top:20px;
+  margin-left:10px;
+  margin-bottom:20px;
+  width:30%;
+  padding:14px;
+  border-radius: 8px;
+  color:#828282;
+  font-size: 18px;
+  border:none;
+}
+
+.studentform input:focus{
+  outline: 1px solid #88BDBC;
+}
+
+.stdbtn{
+  margin-left:20px;
+  margin-bottom: 20px;
+  margin-right: 20px;
+  margin-top:20px;
+  background: #112D32;
+  color:#FBFFFF;
+  font-size: 22px;
+  border:none;
+  border-radius: 10px;
+  padding:14px;
+}
+
+.stdbtn:hover{
+  background: #254e58;
+  cursor: pointer;
+}
+
+.stdbtn:focus{
+  outline:none;
+  background: #112D32;
+}
+
+.stddiv{
+  display: flex;
+  flex-direction: row;
+  justify-content: stretch;
+  margin-bottom: 50px;
+}
+
+.classcontainer{
+  display:flex;
+  flex-direction: column;
+}
+
+.classcontainer button{
+  margin-top:20px;
+  margin-bottom:30px;
+}
+
+
+.backbtn{
+  position: absolute;
+  top:100px;
+  left:20px;
+  background: #112D32;
+  color:#FBFFFF;
+  font-size: 18px;
+  border:none;
+  border-radius: 10px;
+  width:60px;
+  height:40px;
+  line-height: 40px;
+}
+
+.backbtn:hover{
+  background: #254e58;
+  cursor: pointer;
+}
+
+.backbtn:focus{
+  outline:none;
+  background: #112D32;
+}
+
+.editbtn{
+  width:100px;
+  height:100%;
+  margin-top:4px;
+  background: #88BDBC;
+  border:none;
+  color:#FBFFFF;
+  font-size:22px;
+  border-radius: 4px;
+  margin:0 10px;
+}
+
+.editbtn:hover{
+  cursor: pointer;
+  background: #0f2125;
+}
+
+#detailslink{
+  color:#254e58;
+  width: 100%;
+  height: 100%;
+}
+
+#detailslink:hover{
+  background: #254e58;
+  color:#FBFFFF;
+}
+
+td input{
+  height:100%;
+  width:150px;
+  border:none;
+  border-radius: 2px;
+  font-size:22px;
+}
+
+.stddetails{
+  display: flex;
+  margin:30px 20px 30px 20px;
+  padding:20px;
+  background: #254e58;
+  color:#FBFFFF;
+  border-radius: 10px;
+  justify-content: space-evenly;
+}
+
+
+#notregis{
+  display: none;
+  position: relative;
+  top:-30px;
+  color:#112D32;
+}
+
+.stddetails input{
+  background: #112D32;
+  color:#FBFFFF;
+  font-size: 22px;
+  border:1px solid #88BDBC;
+}
+
+.stddetails input:focus{
+  outline:none;
+}
+
+.stddetails button{
+  height: 36px;
+  width: 100px;
+}
+
+#notregis a{
+  color:#112D32;
+  font-size: 1.2em;
+  text-decoration: underline;
+}
+
+#alreadyregis{
+  display: none;
+  position: relative;
+  top:-30px;
+  color:#112D32;
+}
+
+#alreadyregis a{
+  color:#112D32;
+  font-size: 1.2em;
+  text-decoration: underline;
+}
+
+@media(max-width:550px){
+  .title{
+    font-size:28px;
+  }
+  nav button{
+    font-size: 24px;
+  }
+  .loginform{
+    width:90vw;
+  }
+  .loginform input{
+    width:80%;
+  }
+  .loginform h3{
+    font-size: 28px;
+  }
+  .welcomeText{
+    font-size: 28px;
+  }
+  .linkBox{
+    font-size:22px;
+    width:70%;
+  }
+  .btn{
+    font-size: 22px;
+    width:80%;
+  }
+  th,td{
+    font-size:18px;
+  }
+  .studentform h3{
+    font-size:22px;
+  }
+  .stdbtn{
+    font-size: 18px;
+  }
+  .stddiv{
+    flex-direction: column;
+  }
+  .studentform input{
+    width:60%;
+  }
+  .stddetails{
+    flex-direction: column;
+  }
+  .stddetails h2{
+    font-size: 22px;
+  }
+  .editbtn{
+    font-size: 18px;
+  }
+  td input{
+    font-size: 18px;
+  }
+}
+
+@media(max-width:380px){
+  nav button{
+    display: none;
+  }
+  #logout{
+    display: inline;
+  }
+  #notregis{
+    display: inline-block;
+  }
+  #alreadyregis{
+    display: inline-block;
+  }
+}

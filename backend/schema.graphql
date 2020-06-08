@@ -1,0 +1,80 @@
+type Attendance{
+  date:String!
+  present:Boolean!
+}
+
+type Marks{
+  nameofexam:String!
+  score:Int!
+  maxscore:Int!
+}
+
+type Session{
+  year:String!
+  classes:[ID!]
+}
+
+type Student{
+  _id:ID!
+  rollnumber:String!
+  name:String!
+  attendance:[Attendance!]
+  marks:[Marks!]
+}
+
+type Class{
+  _id:ID!
+  name:String!
+  students:[ID!]
+}
+
+
+type User{
+  _id:ID!
+  name:String!
+  email:String!
+  password:String!
+  sessions:[Session!]
+}
+
+input StudentInput{
+  name:String!
+  rollnumber:String!
+  attendance:[AttendanceInput!]
+  marks:[MarksInput!]
+}
+
+input AttendanceInput{
+  date:String!
+  present:Boolean!
+}
+
+input MarksInput{
+  nameofexam:String!
+  score:Int!
+  maxscore:Int!
+}
+
+type Query{
+  classes(name:ID!,session:String!):[Class!]
+  students(classid:ID!):[Student!]!
+  classname(classid:ID!):String!
+  student(studentID:ID!):Student!
+  loginUser(email:String!,password:String!):String!
+  getUser(token:String!):String!
+  isTokenValid(token:String!):Boolean!
+}
+
+
+type Mutation{
+  addStudent(student:StudentInput!,classid:ID!):Boolean!
+  editStudent(name:String!,rollnumber:String!,sid:ID!):Boolean!
+  addUser(name:String!,email:String!,password:String!):String!
+  createNewSession(teacherName:String!):Boolean!
+  createClass(className:String!,teacherName:String!):Class!
+  addStudents(classid:ID!,students:[StudentInput!]!):[Student!]!
+  markAttendance(studentID:ID!,date:String!,present:Boolean!):Boolean
+  addMarks(studentID:ID!,maxscore:Int!,score:Int!,nameofexam:String!):Boolean
+  editAttendance(studentID:ID!,index:Int!):Boolean!
+  editMarks(studentID:ID!,index:Int!,marks:Int!):Int!
+}
