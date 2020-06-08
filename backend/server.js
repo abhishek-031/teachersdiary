@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
 const fs = require('fs');
+const path=require('path');
 const { connect } = require('./database');
 const { createNewSession } = require('./session');
 const { createClass, getClasses, classname } = require('./classes');
