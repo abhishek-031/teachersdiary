@@ -4,19 +4,24 @@ import StudentDetails from './StudentDetails';
 import Attendance from './Attendance';
 import Marks from './Marks';
 import Loader from 'react-loader-spinner';
+import UserContext from '../UserContext';
 
 
 const AddStudent = (props)=>{
 
+
   const handleSubmit= async (e)=>{
     e.preventDefault();
+    document.getElementById('addstd').disable = true;
     const form = document.forms.stddetails;
     const name = form.name.value.trim().toUpperCase();
     const rollnumber = form.rollnumber.value.trim().toUpperCase();
     const std = {
       name,
       rollnumber,
+      class:props.classid,
     };
+    if(props.sample){
     if(props.sample.attendance){
       std.attendance = [];
       props.sample.attendance.forEach(attd=>{
@@ -38,6 +43,7 @@ const AddStudent = (props)=>{
         std.marks.push(mar);
       });
     }
+  }
     const query= `mutation addStudent($student:StudentInput!,$classid:ID!){
       addStudent(student:$student,classid:$classid)
     }`;
@@ -55,7 +61,7 @@ const AddStudent = (props)=>{
       <h3>Add Student</h3>
       <input name='rollnumber' type='text' placeholder='Roll Number' required/>
       <input name='name' type='text' placeholder='Name' required/>
-      <button type='submit' >Add Student</button>
+      <button type='submit' id='addstd' >Add Student</button>
     </form>
   )
 }
@@ -74,6 +80,8 @@ export default class Students extends React.Component{
     };
     this.students = [];
   }
+
+  static contextType = UserContext;
 
   async loadName(){
     const query=`query classname($classid:ID!){
@@ -156,6 +164,29 @@ export default class Students extends React.Component{
     })
   }
 
+  async handleDelete(){
+    let conf = window.confirm("Are you sure you want to delete the class?");
+    if(!conf)
+    return;
+    const { userData } = this.context;
+    this.setState({
+      loading:true,
+    });
+    const query=`mutation deleteClass($classid:ID!,$teacherid:ID!){
+      deleteClass(classid:$classid,teacherid:$teacherid)
+    }`;
+    const vars={
+      classid:this.props.match.params.class,
+      teacherid:userData.user.id,
+    };
+    await graphQLFetch(query,vars);
+    this.setState({
+      loading:false,
+    });
+    alert("class deleted, app will reload now");
+    window.location.reload();
+  }
+
   render(){
     let view = (
       <div className='classcontainer'>
@@ -163,6 +194,7 @@ export default class Students extends React.Component{
         <button className='btn' onClick={()=>{this.handleAttendance()}}> Take Attendance</button>
         <button className='btn' onClick={()=>{this.handleMarks()}}> Add Marks</button>
         <button className='btn' onClick={()=>{this.handleAdd()}}> Add Students</button>
+        <button className='btn' style={{background:"#aa0000",cursor:'pointer'}} onClick={()=>{this.handleDelete()}}>Delete Class</button>
       </div>
     );
     if(this.state.showingAttendance){

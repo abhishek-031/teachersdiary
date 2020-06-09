@@ -1,10 +1,12 @@
 import React from 'react';
 import graphQLFetch from '../GraphQLFetch';
+import Loader from 'react-loader-spinner';
 
 export default class CreateClass extends React.Component{
   constructor(props){
     super(props);
     this.state={
+      loading:false,
       classname:'',
       students:[],
     }
@@ -15,8 +17,9 @@ export default class CreateClass extends React.Component{
     e.preventDefault();
     const form = document.forms.classForm;
     const cname = form.classname.value;
+    const subject = form.subject.value.trim().toUpperCase();
     const classname = cname.trim().toUpperCase();
-    this.setState({classname:classname});
+    this.setState({classname:classname+' '+subject});
   }
 
   handleStudent(e){
@@ -34,6 +37,9 @@ export default class CreateClass extends React.Component{
   }
 
   async submitClass(){
+    this.setState({
+      loading:true,
+    });
     let query = `mutation{
       createClass(className:"${this.state.classname}",teacherName:"${this.props.teacher}"){
         _id
@@ -41,6 +47,10 @@ export default class CreateClass extends React.Component{
     }`;
     const data = await graphQLFetch(query);
     this.classid = data.createClass._id;
+
+    this.state.students.forEach(std=>{
+      std.class = this.classid;
+    });
 
     query=`mutation addStudents($classid:ID!,$students:[StudentInput!]!){
       addStudents(classid:$classid,students:$students){
@@ -52,6 +62,9 @@ export default class CreateClass extends React.Component{
       classid:this.classid,
     };
     await graphQLFetch(query,vars);
+    this.setState({
+      loading:false,
+    });
     this.props.doneCreating();
   }
 
@@ -62,12 +75,15 @@ export default class CreateClass extends React.Component{
         <form className='loginform' name='classForm' onSubmit={(e)=>{this.handleNameSubmit(e)}}>
           <h3>Create Class:</h3>
           <input name='classname' type='text' placeholder='Name of Class' required />
+          <input name='subject' type='text' placeholder='Subject' required />
           <button type='submit'>Add Class</button>
         </form>
       )
     }
     else{
       view = (
+        <>
+        {this.state.loading?<Loader style={{position:"absolute", top:'50vh', left:'50vw'}} type="ThreeDots" color="#254e58" height={80} width={80} />:
         <>
           <h3 className='welcomeText'>{this.state.classname}</h3>
           <div className='addeddiv'>
@@ -100,7 +116,7 @@ export default class CreateClass extends React.Component{
           <button className='stdbtn' onClick={()=>{this.submitClass()}}>Create Class</button>
           </div>
           </div>
-        </>
+        </>}</>
       )
     }
     return (

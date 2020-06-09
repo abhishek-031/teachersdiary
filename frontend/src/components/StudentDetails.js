@@ -20,7 +20,7 @@ export default class StudentDetails extends React.Component{
             pres++;
           }
         }
-        attd.push(`${pres}/${ttl}`);
+        attd.push(`${pres}/${ttl} ( ${(pres/ttl)*100}% )`);
       }
       else{
         attd.push('0/0');

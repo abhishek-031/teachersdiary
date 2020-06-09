@@ -107,4 +107,18 @@ async function addStudent(_,{classid,student}){
   return true; 
 }
 
-module.exports = { addStudents ,students, markAttendance, student, addMarks, editAttendance, editMarks, editStudent, addStudent };
+async function deleteStd(_,{studentid,classid}){
+  const db = getDb();
+  const sid = new ObjectID(studentid);
+  const cid = new ObjectID(classid);
+  await db.collection('students').deleteOne({_id:sid});
+  const cdoc = await db.collection('classes').findOne({_id:cid});
+  const stds = cdoc.students.filter(std=>{
+    return !std.equals(sid);
+  });
+  cdoc.students = stds;
+  await db.collection('classes').findOneAndReplace({_id:cid},cdoc);
+  return true;
+}
+
+module.exports = { addStudents ,students, markAttendance, student, addMarks, editAttendance, editMarks, editStudent, addStudent, deleteStd };

@@ -119,24 +119,26 @@ export default class Student extends React.Component{
     this.state={
       loading:true,
       name:'',
-      rollnumer:'',
+      rollnumber:'',
       attendance:[],
       marks:[],
     };
     this.v=0;
     this.k=0;
+    this.classid='';
   }
 
   async loadData(){
     const query = `query student($studentID:ID!){
       student(studentID:$studentID){
-        _id name rollnumber attendance{ date present } marks{ nameofexam score maxscore }
+        _id name rollnumber attendance{ date present } marks{ nameofexam score maxscore } class
       }
     }`;
     const vars = {
       studentID:this.props.match.params.studentid,
     };
     const data = await graphQLFetch(query,vars);
+    this.classid=data.student.class;
     this.setState({
       editingName:false,
       editingRno:false,
@@ -178,6 +180,23 @@ export default class Student extends React.Component{
       editStudent(name:"${this.state.name}",rollnumber:"${rollnumber}",sid:"${this.props.match.params.studentid}")
     }`;
     await graphQLFetch(query);
+  }
+
+  async deleteStd(){
+    let conf = window.confirm(`Sure you want to delete ${this.state.name}?`);
+    if(!conf){
+      return;
+    }
+    const query=`mutation deleteStd($studentid:ID!,$classid:ID!){
+      deleteStd(studentid:$studentid,classid:$classid)
+    }`;
+    const vars={
+      studentid:this.props.match.params.studentid,
+      classid:this.classid,
+    };
+    await graphQLFetch(query,vars);
+    alert('Student deleted, app will refresh now');
+    window.location.reload();
   }
 
   render(){
@@ -242,6 +261,9 @@ export default class Student extends React.Component{
             })}
           </tbody>
           </table>):<h3 className='welcomeText'>No Exams taken</h3>}
+          <h3 className='welcomeText' style={{color:"red",fontSize:"1em",marginBottom:20}}>Delete student?
+            <button style={{marginLeft:20,padding:"4px 10px",background:"red",color:"white"}} onClick={()=>{this.deleteStd()}}>Delete</button>
+          </h3>
       </div>
   }
       </>

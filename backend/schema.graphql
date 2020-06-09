@@ -16,6 +16,7 @@ type Session{
 
 type Student{
   _id:ID!
+  class:ID!
   rollnumber:String!
   name:String!
   attendance:[Attendance!]
@@ -39,6 +40,7 @@ type User{
 
 input StudentInput{
   name:String!
+  class:ID!
   rollnumber:String!
   attendance:[AttendanceInput!]
   marks:[MarksInput!]
@@ -67,6 +69,8 @@ type Query{
 
 
 type Mutation{
+  deleteStd(studentid:ID!,classid:ID!):Boolean
+  deleteClass(classid:ID!,teacherid:ID!):Boolean
   addStudent(student:StudentInput!,classid:ID!):Boolean!
   editStudent(name:String!,rollnumber:String!,sid:ID!):Boolean!
   addUser(name:String!,email:String!,password:String!):String!

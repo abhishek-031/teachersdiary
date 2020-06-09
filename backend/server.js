@@ -5,8 +5,8 @@ const fs = require('fs');
 const path=require('path');
 const { connect } = require('./database');
 const { createNewSession } = require('./session');
-const { createClass, getClasses, classname } = require('./classes');
-const { addStudents ,students, markAttendance, student, addMarks, editAttendance, editMarks, editStudent, addStudent } = require('./students');
+const { createClass, getClasses, classname, deleteClass } = require('./classes');
+const { addStudents ,students, markAttendance, student, addMarks, editAttendance, editMarks, editStudent, addStudent, deleteStd } = require('./students');
 const { addUser, loginUser, getUser, isTokenValid } = require('./User');
 
 const resolvers={
@@ -20,6 +20,8 @@ const resolvers={
     isTokenValid:isTokenValid,
   },
   Mutation:{
+    deleteStd:deleteStd,
+    deleteClass:deleteClass,
     addStudent:addStudent,
     editStudent:editStudent,
     createNewSession:createNewSession,

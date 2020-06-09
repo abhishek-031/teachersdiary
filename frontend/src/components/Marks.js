@@ -1,10 +1,12 @@
 import React from 'react';
 import graphQLFetch from '../GraphQLFetch';
+import Loader from 'react-loader-spinner';
 
 export default class Marks extends React.Component{
   constructor(props){
     super(props);
     this.state={
+      loading:false,
       addingDetails:true,
       sno:0,
     }
@@ -27,6 +29,9 @@ export default class Marks extends React.Component{
   }
 
   async finalSubmit(){
+    this.setState({
+      loading:true,
+    });
     for(let i=0;i<this.nostudents;i++){
       const query = `mutation addMarks($studentID:ID!,$maxscore:Int!,$score:Int!,$nameofexam:String!){
         addMarks(studentID:$studentID,maxscore:$maxscore,score:$score,nameofexam:$nameofexam)
@@ -39,6 +44,9 @@ export default class Marks extends React.Component{
       };
       await graphQLFetch(query,vars);
     }
+    this.setState({
+      loading:false,
+    });
   }
 
   async handleMarksSubmit(e){
@@ -83,7 +91,10 @@ export default class Marks extends React.Component{
     }
     else{
       view = (
+        <>
+        {this.state.loading?<Loader style={{position:"absolute", top:'50vh', left:'50vw'}} type="Circles" color="#254e58" height={80} width={80} />:
         <div className='loginform' style={{marginTop:10}}>
+          <span>{this.state.sno+1} / {this.nostudents}</span>
           <h3 style={{paddingBottom:0}}>{this.nameofexam}</h3>
           <h3 style={{paddingTop:10}}>Maximum Marks: {this.maxscore}</h3>
           <h3 style={{paddingTop:10,color:"#112d32"}}>For: {this.props.students[this.state.sno].name}</h3>
@@ -91,7 +102,8 @@ export default class Marks extends React.Component{
             <input type='number' name='marks' placeholder='Marks' max={`"${this.maxscore}"`} required/>
             <button type='submit'>Add Marks</button>
           </form>
-        </div>
+        </div>}
+        </>
       );
     }
 
