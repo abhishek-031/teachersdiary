@@ -50,17 +50,21 @@ async function deleteClass(_,{classid,teacherid}){
   const uid = new ObjectID(teacherid);
   const c = await db.collection('classes').findOne({_id:cid});
   await db.collection('classes').deleteOne({_id:cid});
+  let promises = [];
   for(let i=0;i<c.students.length;i++){
-    await db.collection('students').deleteOne({_id:c.students[i]});
+    promises.push(db.collection('students').deleteOne({_id:c.students[i]}));
   }
-  const user = await db.collection('user').findOne({_id:uid});
-  const classes = user.sessions[user.sessions.length-1].classes;
-  const updatedc = classes.filter(classi=>{
-    return !classi.equals(cid);
+  Promise.all(promises)
+  .then(async ()=>{
+    const user = await db.collection('user').findOne({_id:uid});
+    const classes = user.sessions[user.sessions.length-1].classes;
+    const updatedc = classes.filter(classi=>{
+      return !classi.equals(cid);
+    });
+    user.sessions[user.sessions.length-1].classes=updatedc;
+    await db.collection('user').findOneAndReplace({_id:uid},user);
+    return true;
   });
-  user.sessions[user.sessions.length-1].classes=updatedc;
-  await db.collection('user').findOneAndReplace({_id:uid},user);
-  return true;
 }
 
 module.exports = { createClass, getClasses, classname, deleteClass };

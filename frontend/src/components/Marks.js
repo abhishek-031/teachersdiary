@@ -32,6 +32,7 @@ export default class Marks extends React.Component{
     this.setState({
       loading:true,
     });
+    let promises = [];
     for(let i=0;i<this.nostudents;i++){
       const query = `mutation addMarks($studentID:ID!,$maxscore:Int!,$score:Int!,$nameofexam:String!){
         addMarks(studentID:$studentID,maxscore:$maxscore,score:$score,nameofexam:$nameofexam)
@@ -42,11 +43,16 @@ export default class Marks extends React.Component{
         score:this.marks[i],
         nameofexam:this.nameofexam,
       };
-      await graphQLFetch(query,vars);
+      promises.push(graphQLFetch(query,vars));
     }
-    this.setState({
-      loading:false,
-    });
+    Promise.all(promises)
+    .then(async ()=>{
+      await this.props.loadData();
+      this.setState({
+        loading:false,
+      });
+      this.props.handleBack();
+    })
   }
 
   async handleMarksSubmit(e){
@@ -66,8 +72,7 @@ export default class Marks extends React.Component{
     this.marks.push(marks);
     if(nos===this.nostudents-1){
       await this.finalSubmit();
-      await this.props.loadData();
-      this.props.handleBack();
+      return;
     }
     form.marks.value='';
     this.setState({sno:nos+1});

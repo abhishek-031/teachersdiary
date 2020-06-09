@@ -20,6 +20,7 @@ export default class Attendance extends React.Component{
     this.setState({
       loading:true,
     });
+    let promises = [];
     for(let i=0;i<this.studentnos;i++){
       const query=`mutation markAttendance($studentID:ID!,$date:String!,$present:Boolean!){
         markAttendance(studentID:$studentID,date:$date,present:$present)
@@ -29,11 +30,16 @@ export default class Attendance extends React.Component{
         date:this.date,
         present:this.attd[i],
       };
-      await graphQLFetch(query,vars);
+      promises.push(graphQLFetch(query,vars));
     }
-    this.setState({
-      loading:false,
-    });
+    Promise.all(promises)
+    .then(async ()=>{
+      await this.props.loadData();
+      this.setState({
+        loading:false,
+      });
+      this.props.handleBack();
+    })
   }
 
   async handlePresent(){
@@ -41,8 +47,7 @@ export default class Attendance extends React.Component{
     this.attd.push(true);
     if(nos===this.studentnos-1){
       await this.markAttendance();
-      await this.props.loadData();
-      this.props.handleBack();
+      return;
     }
     this.setState({sno:nos+1});
   }
@@ -52,8 +57,7 @@ export default class Attendance extends React.Component{
     this.attd.push(false);
     if(nos===this.studentnos-1){
       await this.markAttendance();
-      await this.props.loadData();
-      this.props.handleBack();
+      return;
     }
     this.setState({sno:nos+1});
   }
